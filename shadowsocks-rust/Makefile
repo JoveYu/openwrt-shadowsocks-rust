@@ -2,6 +2,8 @@
 #
 # Copyright (C) 2017-2020 Yousong Zhou <yszhou4tech@gmail.com>
 # Copyright (C) 2026 Jove Yu <yushijun110@gmail.com>
+#
+# vim: set noexpandtab ts=8 sw=8 sts=0:
 
 include $(TOPDIR)/rules.mk
 
@@ -27,11 +29,11 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/rust/rust-package.mk
 
 define Package/shadowsocks-rust-config
-        SECTION:=net
-        CATEGORY:=Network
-        SUBMENU:=Web Servers/Proxies
-        TITLE:=shadowsocks-rust config script
-        URL:=https://github.com/shadowsocks/shadowsocks-rust
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Web Servers/Proxies
+	TITLE:=shadowsocks-rust config script
+	URL:=https://github.com/shadowsocks/shadowsocks-rust
 endef
 
 define Package/shadowsocks-rust-config/conffiles
@@ -39,58 +41,58 @@ define Package/shadowsocks-rust-config/conffiles
 endef
 
 define Package/shadowsocks-rust-config/install
-                $(INSTALL_DIR) $(1)/etc/config
-                $(INSTALL_DATA) ./shadowsocks-rust.config $(1)/etc/config/shadowsocks-rust
-                $(INSTALL_DIR) $(1)/etc/init.d
-                $(INSTALL_BIN) ./shadowsocks-rust.init $(1)/etc/init.d/shadowsocks-rust
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./shadowsocks-rust.config $(1)/etc/config/shadowsocks-rust
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./shadowsocks-rust.init $(1)/etc/init.d/shadowsocks-rust
 endef
 
 define Package/shadowsocks-rust-ssrules
-        SECTION:=net
-        CATEGORY:=Network
-        SUBMENU:=Web Servers/Proxies
-        TITLE:=shadowsocks-rust ssrules
-        URL:=https://github.com/shadowsocks/shadowsocks-rust
-        DEPENDS:=+firewall4 \
-                            +ip \
-                            +resolveip \
-                            +ucode \
-                            +ucode-mod-fs \
-                            +shadowsocks-rust-sslocal \
-                            +shadowsocks-rust-config \
-                            +kmod-nft-tproxy
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Web Servers/Proxies
+	TITLE:=shadowsocks-rust ssrules
+	URL:=https://github.com/shadowsocks/shadowsocks-rust
+	DEPENDS:=+firewall4 \
+		+ip \
+		+resolveip \
+		+ucode \
+		+ucode-mod-fs \
+		+shadowsocks-rust-sslocal \
+		+shadowsocks-rust-config \
+		+kmod-nft-tproxy
 endef
 
 define Package/shadowsocks-rust-ssrules/install
-                $(INSTALL_DIR) $(1)/usr/share/shadowsocks-rust/
-                $(INSTALL_DATA) ./ssrules/* $(1)/usr/share/shadowsocks-rust/
+	$(INSTALL_DIR) $(1)/usr/share/shadowsocks-rust/
+	$(INSTALL_DATA) ./ssrules/* $(1)/usr/share/shadowsocks-rust/
 endef
 
 define Package/shadowsocks-rust/Default
-        define Package/shadowsocks-rust-$(1)
-                SECTION:=net
-                CATEGORY:=Network
-                SUBMENU:=Web Servers/Proxies
-                TITLE:=shadowsocks-rust $(1)
-                URL:=https://github.com/shadowsocks/shadowsocks-rust
-                DEPENDS:=$$(RUST_ARCH_DEPENDS) @!i386
-        endef
+	define Package/shadowsocks-rust-$(1)
+		SECTION:=net
+		CATEGORY:=Network
+		SUBMENU:=Web Servers/Proxies
+		TITLE:=shadowsocks-rust $(1)
+		URL:=https://github.com/shadowsocks/shadowsocks-rust
+		DEPENDS:=$$(RUST_ARCH_DEPENDS) @!i386
+	endef
 
-        define Package/shadowsocks-rust-$(1)/install
-                $$(INSTALL_DIR) $$(1)/usr/bin
-                $$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/bin/$(1) $$(1)/usr/bin/
-        endef
+	define Package/shadowsocks-rust-$(1)/install
+		$$(INSTALL_DIR) $$(1)/usr/bin
+		$$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/bin/$(1) $$(1)/usr/bin/
+	endef
 endef
 
 SHADOWSOCKS_COMPONENTS:=sslocal ssmanager ssserver ssurl ssservice
 define shadowsocks-rust/templates
-        $(foreach component,$(SHADOWSOCKS_COMPONENTS),
-                $(call Package/shadowsocks-rust/Default,$(component))
-        )
+	$(foreach component,$(SHADOWSOCKS_COMPONENTS),
+		$(call Package/shadowsocks-rust/Default,$(component))
+	)
 endef
 $(eval $(call shadowsocks-rust/templates))
 
 $(foreach component,$(SHADOWSOCKS_COMPONENTS), \
-        $(eval $(call BuildPackage,shadowsocks-rust-$(component))) \
+	$(eval $(call BuildPackage,shadowsocks-rust-$(component))) \
 )
 
