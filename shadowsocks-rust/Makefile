@@ -37,7 +37,7 @@ define Package/shadowsocks-rust-config
 endef
 
 define Package/shadowsocks-rust-config/conffiles
-/etc/config/shadowsocks-rust
+	/etc/config/shadowsocks-rust
 endef
 
 define Package/shadowsocks-rust-config/install
@@ -69,19 +69,19 @@ define Package/shadowsocks-rust-ssrules/install
 endef
 
 define Package/shadowsocks-rust/Default
-	define Package/shadowsocks-rust-$(1)
-		SECTION:=net
-		CATEGORY:=Network
-		SUBMENU:=Web Servers/Proxies
-		TITLE:=shadowsocks-rust $(1)
-		URL:=https://github.com/shadowsocks/shadowsocks-rust
-		DEPENDS:=$$(RUST_ARCH_DEPENDS) @!i386
-	endef
+define Package/shadowsocks-rust-$(1)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Web Servers/Proxies
+	TITLE:=shadowsocks-rust $(1)
+	URL:=https://github.com/shadowsocks/shadowsocks-rust
+	DEPENDS:=$$(RUST_ARCH_DEPENDS) @!i386
+endef
 
-	define Package/shadowsocks-rust-$(1)/install
-		$$(INSTALL_DIR) $$(1)/usr/bin
-		$$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/bin/$(1) $$(1)/usr/bin/
-	endef
+define Package/shadowsocks-rust-$(1)/install
+	$$(INSTALL_DIR) $$(1)/usr/bin
+	$$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/bin/$(1) $$(1)/usr/bin/
+endef
 endef
 
 SHADOWSOCKS_COMPONENTS:=sslocal ssmanager ssserver ssurl ssservice
@@ -95,4 +95,5 @@ $(eval $(call shadowsocks-rust/templates))
 $(foreach component,$(SHADOWSOCKS_COMPONENTS), \
 	$(eval $(call BuildPackage,shadowsocks-rust-$(component))) \
 )
+
 
