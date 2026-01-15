@@ -89,6 +89,8 @@ define shadowsocks-rust/templates
 endef
 $(eval $(call shadowsocks-rust/templates))
 
+$(eval $(call BuildPackage,shadowsocks-rust-config))
+$(eval $(call BuildPackage,shadowsocks-rust-ssrules))
 $(foreach component,$(SHADOWSOCKS_COMPONENTS), \
 	$(eval $(call BuildPackage,shadowsocks-rust-$(component))) \
 )
