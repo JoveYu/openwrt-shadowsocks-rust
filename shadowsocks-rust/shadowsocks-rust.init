@@ -53,8 +53,8 @@ gen_server_conf() {
             [ -z "$remote_dns_port" ] || json_add_int remote_dns_port "$remote_dns_port"
             [ -z "$client_cache_size" ] || json_add_int client_cache_size "$client_cache_size"
         elif [ "$protocol" = "redir" ]; then
-            json_add_int tcp_redir "tproxy"
-            json_add_int udp_redir "tproxy"
+            json_add_string tcp_redir "tproxy"
+            json_add_string udp_redir "tproxy"
         elif [ "$protocol" = "tun" ]; then
             [ -z "$tun_interface_name" ] || json_add_string tun_interface_name "$tun_interface_name"
             [ -z "$tun_interface_address" ] || json_add_string tun_interface_address "$tun_interface_address"
@@ -96,8 +96,8 @@ stop_service() {
 
 ss_rules_nft_gen() {
     [ -s "$ssrules_uc" ] || return 1
-
     validate_rules_section "rules" || return 1
+    [ "$disabled" = "1" ] && return 1
 
     if [ -n "$redir_tcp" ]; then
         config_get local_port_tcp "$redir_tcp" local_port
@@ -191,6 +191,7 @@ validate_local_section() {
 
 validate_rules_section() {
     uci_validate_section shadowsocks-rust rules "$1" \
+        'disabled:bool:0' \
         'redir_tcp:uci("shadowsocks-rust", "@local")' \
         'redir_udp:uci("shadowsocks-rust", "@local")' \
         'src_ips_bypass:or(ipaddr,cidr)' \
