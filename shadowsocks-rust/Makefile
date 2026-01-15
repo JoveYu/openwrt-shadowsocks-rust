@@ -55,9 +55,6 @@ define Package/shadowsocks-rust-ssrules
 	URL:=https://github.com/shadowsocks/shadowsocks-rust
 	DEPENDS:=+firewall4 \
 		+ip \
-		+resolveip \
-		+ucode \
-		+ucode-mod-fs \
 		+shadowsocks-rust-sslocal \
 		+shadowsocks-rust-config \
 		+kmod-nft-tproxy
