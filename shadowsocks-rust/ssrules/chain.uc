@@ -51,8 +51,8 @@ if (proto == "tcp") {
         system("
                 set -o errexit
                 iprr() {
-                        while ip $1 rule del fwmark 1 lookup 100 2>/dev/null; do true; done
-                                    ip $1 rule add fwmark 1 lookup 100
+                        while ip $1 rule del fwmark 100 lookup 100 2>/dev/null; do true; done
+                        ip $1 rule add fwmark 100 lookup 100
                         ip $1 route flush table 100 2>/dev/null || true
                         ip $1 route add local default dev lo table 100
                 }
@@ -94,7 +94,7 @@ chain ss_rules_dst_{{ proto }} {
 
 {%   if (proto == "tcp"): %}
 chain ss_rules_forward_{{ proto }} {
-        meta l4proto tcp {{ o_nft_tcp_extra }} meta mark set 1 tproxy to :{{ redir_port }};
+        meta l4proto tcp {{ o_nft_tcp_extra }} meta mark set 100 tproxy to :{{ redir_port }};
 }
 {%   let local_verdict = get_local_verdict(); if (local_verdict): %}
 chain ss_rules_local_out {
@@ -109,7 +109,7 @@ chain ss_rules_local_out {
 {%     endif %}
 {%   elif (proto == "udp"): %}
 chain ss_rules_forward_{{ proto }} {
-        meta l4proto udp {{ o_nft_udp_extra }} meta mark set 1 tproxy to :{{ redir_port }};
+        meta l4proto udp {{ o_nft_udp_extra }} meta mark set 100 tproxy to :{{ redir_port }};
 }
 {%   endif %}
 {% endif %}

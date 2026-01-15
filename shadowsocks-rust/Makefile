@@ -40,9 +40,9 @@ endef
 
 define Package/shadowsocks-rust-config/install
                 $(INSTALL_DIR) $(1)/etc/config
-                $(INSTALL_DATA) ./files/shadowsocks-rust.config $(1)/etc/config/shadowsocks-rust
+                $(INSTALL_DATA) ./shadowsocks-rust.config $(1)/etc/config/shadowsocks-rust
                 $(INSTALL_DIR) $(1)/etc/init.d
-                $(INSTALL_BIN) ./files/shadowsocks-rust.init $(1)/etc/init.d/shadowsocks-rust
+                $(INSTALL_BIN) ./shadowsocks-rust.init $(1)/etc/init.d/shadowsocks-rust
 endef
 
 define Package/shadowsocks-rust-ssrules
@@ -56,14 +56,14 @@ define Package/shadowsocks-rust-ssrules
                             +resolveip \
                             +ucode \
                             +ucode-mod-fs \
-                            +shadowsocks-rust-ssredir \
+                            +shadowsocks-rust-sslocal \
                             +shadowsocks-rust-config \
                             +kmod-nft-tproxy
 endef
 
 define Package/shadowsocks-rust-ssrules/install
-                $(INSTALL_DIR) $(1)/usr/share/ssrules
-                $(INSTALL_DATA) ./files/ssrules/* $(1)/usr/share/ssrules/
+                $(INSTALL_DIR) $(1)/usr/share/shadowsocks-rust/
+                $(INSTALL_DATA) ./ssrules/* $(1)/usr/share/shadowsocks-rust/
 endef
 
 define Package/shadowsocks-rust/Default
