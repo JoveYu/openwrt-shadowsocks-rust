@@ -34,7 +34,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-openwrt-${{ matrix.ver }}
           FEEDNAME: packages_ci
-          PACKAGES: shadowsocks-rust
+          PACKAGES: shadowsocks-rust luci-app-shadowsocks-rust
           NO_REFRESH_CHECK: true
 
       - name: Upload artifacts

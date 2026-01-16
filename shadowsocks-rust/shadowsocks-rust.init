@@ -166,7 +166,8 @@ validate_server_section() {
         'password:string' \
         'method:string' \
         'plugin:string' \
-        'plugin_opts:string'
+        'plugin_opts:string' \
+        'timeout:uinteger:60'
 }
 
 validate_local_section() {
@@ -185,8 +186,7 @@ validate_local_section() {
         'client_cache_size:uinteger:10' \
         'tun_interface_name:string:tun0' \
         'tun_interface_address:cidr' \
-        'mode:or("tcp_only", "udp_only", "tcp_and_udp"):tcp_only' \
-        'timeout:uinteger:60'
+        'mode:or("tcp_only", "udp_only", "tcp_and_udp"):tcp_only'
 }
 
 validate_rules_section() {
