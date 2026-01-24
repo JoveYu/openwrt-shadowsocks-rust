@@ -18,7 +18,8 @@ ssrules_nft="/etc/nftables.d/90-shadowsocks-rust-ssrules.nft"
 gen_server_conf() {
     local server_cfg="$1"
     local jsonpath="$2"
-    local method
+    local method # do not delete
+    local has_local=0
 
     validate_server_section "$server_cfg" || return 1
     [ "$disabled" = "1" ] && return 1
@@ -37,6 +38,7 @@ gen_server_conf() {
         validate_local_section "$local_cfg" || return
         [ "$disabled" = "1" ] && return
         [ "$server" = "$server_cfg" ] || return
+        has_local=1
 
         json_add_object
         [ -z "$protocol" ] || json_add_string protocol "$protocol"
@@ -64,6 +66,7 @@ gen_server_conf() {
 
     config_foreach add_local_to_json local
     json_close_array
+    [ "$has_local" = "1" ] || return 1
     json_dump > $jsonpath
 }
 
