@@ -50,4 +50,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
-          artifacts: "bin/packages/${{ matrix.arch }}/packages_ci/*.ipk"
+          artifacts: "bin/packages/${{ matrix.arch }}/packages_ci/*.*pk"
