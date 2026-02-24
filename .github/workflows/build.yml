@@ -20,10 +20,10 @@ jobs:
           - aarch64_cortex-a72
           - aarch64_cortex-a76
           - aarch64_generic
-          - mipsel_24kc
           - x86_64
         ver:
           - '24.10'
+          - '25.12'
     steps:
       - uses: actions/checkout@main
         with:
