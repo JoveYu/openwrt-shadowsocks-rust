@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.arch }}-${{ matrix.ver }}
-          path: bin/packages/${{ matrix.arch }}/packages_ci/*.ipk
+          path: bin/packages/${{ matrix.arch }}/packages_ci/*.*pk
 
       - name: Upload packages
         if: github.ref_type == 'tag'
