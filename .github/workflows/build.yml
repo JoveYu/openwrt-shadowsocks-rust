@@ -10,20 +10,22 @@ on:
 
 jobs:
   build:
-    name: Build ${{ matrix.ver }} ${{ matrix.arch }}
+    name: Build ${{ matrix.sdk }} ${{ matrix.arch }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         arch:
+          - x86_64
           - aarch64_cortex-a53
           - aarch64_cortex-a72
           - aarch64_cortex-a76
           - aarch64_generic
-          - x86_64
-        ver:
-          - '24.10'
-          - '25.12'
+          - mips_24kc
+          - mipsel_24kc
+        sdk:
+          - openwrt-24.10
+          - openwrt-25.12
     steps:
       - uses: actions/checkout@main
         with:
@@ -32,7 +34,7 @@ jobs:
       - name: Building packages
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: ${{ matrix.arch }}-openwrt-${{ matrix.ver }}
+          ARCH: ${{ matrix.arch }}-${{ matrix.sdk }}
           FEEDNAME: packages_ci
           PACKAGES: shadowsocks-rust luci-app-shadowsocks-rust
           NO_REFRESH_CHECK: true
@@ -40,8 +42,12 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.arch }}-${{ matrix.ver }}
+          name: ${{ matrix.arch }}-${{ matrix.sdk }}
           path: bin/packages/${{ matrix.arch }}/packages_ci/*.*pk
+
+      - name: Create compress files
+        continue-on-error: true
+        run: "tar -zcvf ${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz -C bin/packages/${{ matrix.arch }}/packages_ci *.*pk"
 
       - name: Upload packages
         if: github.ref_type == 'tag'
@@ -50,4 +56,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
-          artifacts: "bin/packages/${{ matrix.arch }}/packages_ci/*.*pk"
+          artifacts: bin/packages/${{ matrix.arch }}/packages_ci/${{ matrix.sdk }}-${{ matrix.arch }}.tar.gz
