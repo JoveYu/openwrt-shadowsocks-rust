@@ -1,31 +1,31 @@
 # OpenWrt Shadowsocks-Rust
 
-一个针对OpenWrt的Shadowsocks Rust实现，包含LuCI Web管理界面和规则管理工具。
+A Shadowsocks Rust implementation for OpenWrt, including a LuCI web management interface and rule management tools.
 
-## 项目概述
+## Project Overview
 
-该项目提供了一套完整的Shadowsocks Rust代理解决方案，专门为OpenWrt路由器设计，包括：
+This project provides a complete Shadowsocks Rust proxy solution designed for OpenWrt routers, including:
 
-- **shadowsocks-rust**: 基于Rust的高性能Shadowsocks代理服务
-- **luci-app-shadowsocks-rust**: OpenWrt LuCI Web管理界面
+- **shadowsocks-rust**: A high-performance Shadowsocks proxy service written in Rust
+- **luci-app-shadowsocks-rust**: An OpenWrt LuCI web management interface
 
-## 主要功能
+## Key Features
 
-### Shadowsocks-Rust核心
-- 支持多种加密方式（AEAD-Cipher-2022等）
-- 本地DNS解析 (`local-dns`)
-- HTTP代理支持 (`local-http`)
-- 重定向代理 (`local-redir`)
-- TUN隧道模式 (`local-tun`)
-- 通用隧道支持 (`local-tunnel`)
+### Shadowsocks-Rust Core
+- Supports multiple encryption methods (including AEAD-Cipher-2022)
+- Local DNS resolution (`local-dns`)
+- HTTP proxy support (`local-http`)
+- Redirect proxy mode (`local-redir`)
+- TUN tunnel mode (`local-tun`)
+- Generic tunnel support (`local-tunnel`)
 
-### LuCI Web界面
-- 服务器配置和管理
-- 规则配置与编辑
-- 本地化支持（简体中文）
-- 直观的管理界面
+### LuCI Web Interface
+- Server configuration and management
+- Rule configuration and editing
+- Localization support (Simplified Chinese)
+- Intuitive management interface
 
-### 规则引擎
-- 高级链式规则处理
-- 灵活的规则集合管理
-- NFT防火墙集成
+### Rule Engine
+- Advanced chained rule processing
+- Flexible rule set management
+- NFT firewall integration
