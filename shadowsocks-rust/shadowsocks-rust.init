@@ -6,10 +6,10 @@
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 
-. /usr/share/libubox/jshn.sh
-
 USE_PROCD=1
 START=99
+
+. /usr/share/libubox/jshn.sh
 
 confdir=/var/etc/shadowsocks-rust
 ssrules_uc="/usr/share/shadowsocks-rust/ssrules.uc"
