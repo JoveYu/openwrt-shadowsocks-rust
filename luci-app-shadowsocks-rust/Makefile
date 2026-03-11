@@ -9,6 +9,7 @@ LUCI_DEPENDS:=+luci-base +shadowsocks-rust-config
 LUCI_PKGARCH:=all
 LUCI_LANGUAGES:=zh_Hans
 
+#include ../../luci.mk
 include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
