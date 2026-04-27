@@ -75,6 +75,8 @@ chain ss_rules_pre_src_{{ proto }} {
 }
 
 chain ss_rules_src_{{ proto }} {
+        ether saddr @ss_rules_src_macs_bypass accept;
+        ether saddr @ss_rules_src_macs_forward goto ss_rules_forward_{{ proto }};
         ip saddr @ss_rules_src_bypass accept;
         ip saddr @ss_rules_src_forward goto ss_rules_forward_{{ proto }};
         ip saddr @ss_rules_src_checkdst goto ss_rules_dst_{{ proto }};

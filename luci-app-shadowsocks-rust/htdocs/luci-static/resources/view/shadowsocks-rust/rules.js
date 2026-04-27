@@ -17,6 +17,11 @@ function src_dst_option(s /*, ... */) {
 	o.datatype = 'or(ipaddr,cidr)';
 }
 
+function src_mac_option(s /*, ... */) {
+	var o = s.taboption.apply(s, L.varargs(arguments, 1));
+	o.datatype = 'macaddr';
+}
+
 return view.extend({
 	load: function() {
 		return uci.load(conf).then(function() {
@@ -30,7 +35,8 @@ return view.extend({
 
 		m = new form.Map(conf, _('Rules'),
 			_('Configure traffic routing rules for transparent proxy. \
-				If enabled, packets will first have their source IP addresses checked \
+				If enabled, packets will first have their source MAC addresses checked, \
+				then their source IP addresses checked \
 				against <em>Source IPs to Bypass</em>, <em>Source IPs to Forward</em>, \
 				<em>Source IPs to Check Destination</em> and if none matches \
 				<em>Source Default Policy</em> will give the default action to be taken. \
@@ -94,6 +100,12 @@ return view.extend({
 		src_dst_option(s, 'src', form.DynamicList, 'src_ips_checkdst',
 			_('Check Destination'),
 			_('Continue to have destination address checked for packets with source address in this list'));
+		src_mac_option(s, 'src', form.DynamicList, 'src_macs_bypass',
+			_('MACs to Bypass'),
+			_('Bypass ss-redir for packets with source MAC address in this list'));
+		src_mac_option(s, 'src', form.DynamicList, 'src_macs_forward',
+			_('MACs to Forward'),
+			_('Forward through ss-redir for packets with source MAC address in this list'));
 
 		o = s.taboption('src', form.ListValue, 'src_default',
 			_('Default Policy'),

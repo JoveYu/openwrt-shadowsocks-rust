@@ -21,6 +21,10 @@ msgstr ""
 msgid "Bypass ss-redir for packets with source address in this list"
 msgstr ""
 
+#: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:105
+msgid "Bypass ss-redir for packets with source MAC address in this list"
+msgstr ""
+
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:72
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:95
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:103
@@ -38,7 +42,8 @@ msgstr ""
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:32
 msgid ""
 "Configure traffic routing rules for transparent proxy. If enabled, packets "
-"will first have their source IP addresses checked against <em>Source IPs to "
+"will first have their source MAC addresses checked, then their source IP "
+"addresses checked against <em>Source IPs to "
 "Bypass</em>, <em>Source IPs to Forward</em>, <em>Source IPs to Check "
 "Destination</em> and if none matches <em>Source Default Policy</em> will "
 "give the default action to be taken. If the prior check results in action "
@@ -156,6 +161,18 @@ msgstr ""
 
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:93
 msgid "Forward through ss-redir for packets with source address in this list"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:108
+msgid "Forward through ss-redir for packets with source MAC address in this list"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:104
+msgid "MACs to Bypass"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:107
+msgid "MACs to Forward"
 msgstr ""
 
 #: htdocs/luci-static/resources/view/shadowsocks-rust/rules.js:41

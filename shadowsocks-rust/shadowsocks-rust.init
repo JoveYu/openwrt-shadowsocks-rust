@@ -121,6 +121,8 @@ ss_rules_nft_gen() {
     json_add_string o_src_bypass "$src_ips_bypass"
     json_add_string o_src_forward "$src_ips_forward"
     json_add_string o_src_checkdst "$src_ips_checkdst"
+    json_add_string o_src_macs_bypass "$src_macs_bypass"
+    json_add_string o_src_macs_forward "$src_macs_forward"
     json_add_string o_src_default "$src_default"
     json_add_string o_dst_bypass "$dst_ips_bypass"
     json_add_string o_dst_forward "$dst_ips_forward"
@@ -200,6 +202,8 @@ validate_rules_section() {
         'src_ips_bypass:or(ipaddr,cidr)' \
         'src_ips_forward:or(ipaddr,cidr)' \
         'src_ips_checkdst:or(ipaddr,cidr)' \
+        'src_macs_bypass:macaddr' \
+        'src_macs_forward:macaddr' \
         'dst_ips_bypass_file:file' \
         'dst_ips_bypass:or(ipaddr,cidr)' \
         'dst_ips_forward_file:file' \

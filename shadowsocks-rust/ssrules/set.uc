@@ -57,6 +57,15 @@ let set_suffix = {
     "dst_forward_rrst_": {},
 };
 
+let ether_set_suffix = {
+    "src_macs_bypass": {
+        str: o_src_macs_bypass,
+    },
+    "src_macs_forward": {
+        str: o_src_macs_forward,
+    },
+};
+
 function set_name(suf, af) {
     if (af == 4) {
         return "ss_rules_"+suf;
@@ -96,6 +105,20 @@ function set_elements(suf, af) {
 
     return res;
 }
+
+function ether_set_elements(suf) {
+    let obj = ether_set_suffix[suf];
+    let res = [];
+    let str = obj["str"];
+
+    if (!str) return res;
+
+    for (let addr in split(str, /[ \t\n]/)) {
+        addr = trim(addr);
+        if (addr) push(res, addr);
+    }
+    return res;
+}
 %}
 
 {% for (let suf in set_suffix): for (let af in [4, 6]): %}
@@ -112,3 +135,16 @@ set {{ set_name(suf, af) }} {
 {%   endif %}
 }
 {% endfor; endfor %}
+
+{% for (let suf in ether_set_suffix): %}
+set ss_rules_{{ suf }} {
+    type ether_addr;
+{%   let elems = ether_set_elements(suf); if (length(elems)): %}
+    elements = {
+{%     for (let i = 0; i < length(elems); i++): %}
+        {{ elems[i] }}{% if (i < length(elems) - 1): %},{% endif %}{% print("\n") %}
+{%     endfor %}
+    }
+{%   endif %}
+}
+{% endfor %}
